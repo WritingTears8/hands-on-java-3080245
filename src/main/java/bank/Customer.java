@@ -14,7 +14,7 @@ public class Customer {
     setUsername(username);
     setPassword(password);
     setAccountId(accountID);
-    setAuthenticated(authenticated: false);
+    setAuthenticated(authenticated : false);
 
     
   }

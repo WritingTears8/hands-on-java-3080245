@@ -1,5 +1,7 @@
 package bank;
 
+import bank.exceptions.AmountExceptions;
+
 public class Account {
  
     private int id;
@@ -7,11 +9,9 @@ public class Account {
     private Double balance;
     
 
-    public Account(int int1, String string, double double1) {
-			//TODO Auto-generated constructor stub
-		}
+  
 
-		public void Account( int id, String type, Double balance){
+		public void Account(int id, String type, Double balance){
       setId(id);
       setType(type);
       setBalance(balance);
@@ -51,11 +51,25 @@ public class Account {
       else{
         double newBalance = balance + amount;
         setBalance(newBalance);
+        DataSource.updateAccountBalance(id, newBalance);
+
       }
 
     }
     
-    public void withdraw (double amount){
+    public void withdraw (double amount)throws AmountException{
+
+      if(amount < 0){
+        throw new AmountExceptions("The withdrawal amount must be greater than 0.");
+      }
+      else if(amount > getBalance()){
+        throw new AmountExceptions("You do not have sufficient funds for this withdraw.");
+      }
+      else{
+        double newBalance = balance - amount;
+        setBalance = newBalance;
+        DataSource.updateAccountBalance(id, newBalance);
+      }
 
     }
 

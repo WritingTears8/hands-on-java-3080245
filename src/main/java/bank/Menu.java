@@ -3,10 +3,16 @@ package bank;
 import java.util.Scanner;
 
 import javax.security.auth.login.LoginException;
+import javax.sql.DataSource;
+
+import bank.exceptions.AmountExceptions;
 
 public class Menu {
   private Scanner scanner;
 
+  /**
+   * @param args
+   */
   public static void main(String[] args ){
     System.out.println("Welcome to Globe Bank International");
 
@@ -15,7 +21,7 @@ public class Menu {
     Customer customer = menu.authenticateUser();
 
     if(customer != null){
-      Account account = DataSource.getAccount(customer.getAccountId());
+      final Account account = DataSource.getAccount(customer.getAccountId());
       menu.showMenu(customer, account);
 
     }
@@ -27,16 +33,18 @@ public class Menu {
 
   }
 
-  private Customer authenticateUser(){
+  
+
+  cateUser(){
     System.out.println("enter username");
     String username = scanner.next();
 
     System.out.println("enter password");
-    String password = scanner.nex();
+    String password = scanner.next();
 
     Customer customer = null;
     try{
-    customer = Authenticator.login(username, password);
+    customer = Authenticator.loginogin(username, password) throw LoginException;
     } catch(LoginException e){
       System.out.println("Error" + e.getMessage());
 
@@ -46,7 +54,11 @@ public class Menu {
 
 
   }
-  private void showMenu(Customer customer, Account account){
+  /**
+   * @param customer
+   * @param account
+   */
+  unt){
     
     int selection = 0;
 
@@ -70,14 +82,19 @@ public class Menu {
           account.deposit(amount);
         }catch(AmountExceptions e){
           System.out.println(e.getMessage());
-          Systemout.println("Please try again.")
+          System.out.println("Please try again.");
         }
         break;
         
         case 2:
         System.out.println("How much would you like to withdraw?");
         amount = scanner.nextDouble();
-        account.withdraw(amount);
+        try{
+          account.withdraw(amount);
+        }catch(AmountExceptions e){
+          System.out.println(e.getMessage());
+          System.out.println("Please try again");
+        }
         break;
         
         case 3:
@@ -92,15 +109,7 @@ public class Menu {
         default:
         System.out.println("Invalid option. Please retry");
         break;
-        
       }
-
-
-
-
-
     }
   }
-  
-
 }
