@@ -44,12 +44,19 @@ public class Account {
       this.balance = balance;
     }
 
-    public void deposit (double amount){
+    public void deposit (double amount) throws AmountExceptions {
+      if( amount < 1){
+        throw new AmountExceptions("The minimum deposit is 1.00");
+      }
+      else{
+        double newBalance = balance + amount;
+        setBalance(newBalance);
+      }
 
     }
     
     public void withdraw (double amount){
-      
+
     }
 
 
